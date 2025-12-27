@@ -49,7 +49,7 @@ console.log(String(23), 23); //a string (in white color), a number
 console.log("I am " + 23 + " years old");
 //here we have string , number and another string
 // here the plus operator triggers a coercion to strings.
-// whenever there is an operation between a String and a number, the number will be converted to a string.
+// whenever there is an plus operation between a String and a number, the number will be converted to a string.
 // so we can write also this
 console.log("I am " + '23' + " years old");
 // bcz the plus operator  again converts  numbers to strings
@@ -75,4 +75,8 @@ console.log(2 + 3 + 4 + "5"); // '95'
 
 
 console.log('10' - '4' - '3' - 2 + '5');
-// 3-2+'5' = '15' 
+// 3-2+'5' = '15'
+
+// When comparing a string ('18') and a number (18) like '18'== 18,
+// JavaScript automatically attempts to convert the string to a number.
+// will see this in equality operators.
