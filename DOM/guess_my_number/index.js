@@ -123,8 +123,16 @@ document.querySelector('.check').addEventListener('click',
 
     else if (guess === secret_number) {
       msg.textContent = '🎉 Correct Number!';
-      msg.style.boxShadow = '15px 15px 100px #ff00ff';
+      msg.style.boxShadow = '15px 15px 100px #8cff00ff';
+      // with correct guess we need to change the backgroudn color of entire page,
+      // so will select the whole body element
+      document.querySelector('body').style.backgroundColor = '#60b347';
+      document.querySelector('.number').style.width = '20rem';
+      document.querySelector('.number').style.backgroundColor = '#84ff00ff';
+      document.querySelector('.number').style.boxShadow = '0 0 20px #62ff00ff, inset 0 0 10px #ddff00ff';
+
     }
+
     // case 3: when guess is too low or too high
     // 2nd else if condition for too high 
     else if (guess > secret_number) {
@@ -163,3 +171,7 @@ document.querySelector('.check').addEventListener('click',
 // made it score > 1 bcz if did > 0
 // then we have to click button twice at score 1 this shouldnt happen
 // score 1 se kam hone ke pehle it should display losing msg along with updating score to 0.
+
+// whenever we are manipulating style, we always need to specify a string.
+// these styles are acutally inline styles and we arent changing css file.
+// style property.css property in camelCase notation = string value
