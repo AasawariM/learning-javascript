@@ -12,4 +12,4 @@ console.log(document.querySelector('.number')); //this selects the entire elemen
 // what we did now is DOM Manipulation.
 // we want to access the actual number value currently is ?
 // to do so we have textcontent property
-// console.log(document.querySelector('.number').textContent);
+console.log(document.querySelector('.number').textContent);
