@@ -79,17 +79,57 @@ console.log(document.querySelector('.guess').value = 20); //prints 20
 // we first need to convert this guess string to a number 
 // so will use the Number function.
 
-document.querySelector('.check').addEventListener('click', function () {
-  const guess = Number(document.querySelector('.guess').value);
-  console.log(guess);
-  console.log(typeof guess);
+// ***************
+// defining a secret number between 1 and 20
+// Math is object and random is one the methods it returns a random number between 0 and 1
+// so to have number between 1 to 20 we can multiply it with 20 
+// const secret_number = Math.random() * 20; //0 to 19.99999999
+// to remove decimal numbers we use trunc method and add 1 to result toget number between 1 to 20 
 
-  // case 1: There is no guess/input (to check if there is a value in input field,if not print to console a msg)
-  if (!guess) {
-    const msg = document.querySelector('.message'); //message is a pragraph
-    msg.textContent = "⛔ No Number!";
-    msg.style.padding = '0 1rem';
-    msg.style.boxShadow = '10px 10px 20px #ff00ff';
-  }
-});
+const secret_number = Math.trunc(Math.random() * 20) + 1;
+
+// in real game number will be hidden behind the ? mark
+// for testing purpose 
+document.querySelector('.number').textContent = secret_number;
+
+
+document.querySelector('.check').addEventListener('click',
+  function () {
+    const guess = Number(document.querySelector('.guess').value);
+    console.log(guess);
+    console.log(typeof guess);
+
+    // case 1: There is no guess/input (to check if there is a value in input field,if not print to console a msg)
+    if (!guess) {
+      const msg = document.querySelector('.message'); //message is a pragraph
+      msg.textContent = "⛔ No Number!";
+      msg.style.padding = '0 1rem';
+      msg.style.boxShadow = '10px 10px 20px #ff00ff';
+    }
+    // case 2: guess is correct
+    // i.e when guess is equal to the secret number
+
+    //for this we first need to define that secret number first.
+    // we should define it outside the handler function 
+    // bcz we want that number to defined only once,only when we start the application.
+    // so that one number can be compared with each of the guesses made on each click.
+    // as we have now defined secret_number on the top lets now compare it with guess.
+    // added this condition as first else if part with above if
+    else if (guess === secret_number) {
+      const msg = document.querySelector('.message');
+      msg.textContent = '🎉 Correct Number!';
+      msg.style.boxShadow = '15px 15px 100px #ff00ff';
+    }
+    // case 3: when guess is too low or too high
+    // 2nd else if condition for too high 
+    else if (guess > secret_number) {
+      const msg = document.querySelector('.message');
+      msg.textContent = '📈Too High!';
+    }
+    // 3rd else if condition for too low
+    else if (guess < secret_number) {
+      const msg = document.querySelector('.message');
+      msg.textContent = '📉Too Low!';
+    }
+  });
 
