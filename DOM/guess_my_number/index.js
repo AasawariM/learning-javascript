@@ -96,6 +96,8 @@ let secret_number = Math.trunc(Math.random() * 20) + 1;
 // score variable
 let score = 20; //initial score , also called as state variable.
 
+// highscore variable
+let high_score = 0;
 // check button functionality
 
 document.querySelector('.check').addEventListener('click',
@@ -137,6 +139,12 @@ document.querySelector('.check').addEventListener('click',
       // display secret number when guess is actually correct. 
       document.querySelector('.number').textContent = secret_number;
 
+      // highscore logic
+      if (score > high_score) {
+        high_score = score;
+        document.querySelector('.highscore').textContent = high_score;
+
+      }
     }
 
     // case 3: when guess is too low or too high
