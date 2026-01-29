@@ -92,6 +92,8 @@ const secret_number = Math.trunc(Math.random() * 20) + 1;
 // for testing purpose 
 document.querySelector('.number').textContent = secret_number;
 
+// score variable
+let score = 20; //initial score , also called as state variable.
 
 document.querySelector('.check').addEventListener('click',
   function () {
@@ -99,9 +101,12 @@ document.querySelector('.check').addEventListener('click',
     console.log(guess);
     console.log(typeof guess);
 
+    // adding below 2 lines (upto if block) to use DRY principle by defining only once outside.
+    const msg = document.querySelector('.message'); //message is a pragraph
+    const score_value = document.querySelector('.score');
+
     // case 1: There is no guess/input (to check if there is a value in input field,if not print to console a msg)
     if (!guess) {
-      const msg = document.querySelector('.message'); //message is a pragraph
       msg.textContent = "⛔ No Number!";
       msg.style.padding = '0 1rem';
       msg.style.boxShadow = '10px 10px 20px #ff00ff';
@@ -115,21 +120,46 @@ document.querySelector('.check').addEventListener('click',
     // so that one number can be compared with each of the guesses made on each click.
     // as we have now defined secret_number on the top lets now compare it with guess.
     // added this condition as first else if part with above if
+
     else if (guess === secret_number) {
-      const msg = document.querySelector('.message');
       msg.textContent = '🎉 Correct Number!';
       msg.style.boxShadow = '15px 15px 100px #ff00ff';
     }
     // case 3: when guess is too low or too high
     // 2nd else if condition for too high 
     else if (guess > secret_number) {
-      const msg = document.querySelector('.message');
-      msg.textContent = '📈Too High!';
+      if (score > 1) //while score is still above 1
+      {
+        msg.textContent = '📈Too High!';
+        score--;
+        score_value.textContent = score;
+      }
+      else {
+        msg.textContent = '💥 You lost the Game!';
+        score_value.textContent = 0;
+      }
     }
     // 3rd else if condition for too low
     else if (guess < secret_number) {
-      const msg = document.querySelector('.message');
-      msg.textContent = '📉Too Low!';
+      if (score > 1) //while score is still above 1
+      {
+        msg.textContent = '📉Too Low!';
+        score--;
+        score_value.textContent = score;
+      }
+      else {
+        msg.textContent = '💥 You lost the Game!';
+        score_value.textContent = 0;
+      }
     }
   });
 
+// working with scores
+// each time we guess a wrong number our score should decrease.
+// guessing wrong is case 3 so for both else ifs(2 and 3) we will implement above
+// first we will define the score varible outside and then decrease it each time for wrong guesses.
+// add condition for : after reaching to 0 by score--; .
+// also some msg should also come about losing the game.
+// made it score > 1 bcz if did > 0
+// then we have to click button twice at score 1 this shouldnt happen
+// score 1 se kam hone ke pehle it should display losing msg along with updating score to 0.
