@@ -86,14 +86,17 @@ console.log(document.querySelector('.guess').value = 20); //prints 20
 // const secret_number = Math.random() * 20; //0 to 19.99999999
 // to remove decimal numbers we use trunc method and add 1 to result toget number between 1 to 20 
 
-const secret_number = Math.trunc(Math.random() * 20) + 1;
+let secret_number = Math.trunc(Math.random() * 20) + 1;
 
 // in real game number will be hidden behind the ? mark
 // for testing purpose 
-document.querySelector('.number').textContent = secret_number;
+// document.querySelector('.number').textContent = secret_number;
+// commented above line bcz  we need to hide the secret number
 
 // score variable
 let score = 20; //initial score , also called as state variable.
+
+// check button functionality
 
 document.querySelector('.check').addEventListener('click',
   function () {
@@ -130,6 +133,9 @@ document.querySelector('.check').addEventListener('click',
       document.querySelector('.number').style.width = '20rem';
       document.querySelector('.number').style.backgroundColor = '#84ff00ff';
       document.querySelector('.number').style.boxShadow = '0 0 20px #62ff00ff, inset 0 0 10px #ddff00ff';
+
+      // display secret number when guess is actually correct. 
+      document.querySelector('.number').textContent = secret_number;
 
     }
 
@@ -175,3 +181,30 @@ document.querySelector('.check').addEventListener('click',
 // whenever we are manipulating style, we always need to specify a string.
 // these styles are acutally inline styles and we arent changing css file.
 // style property.css property in camelCase notation = string value
+
+
+// again button functionality
+
+document.querySelector('.again').addEventListener('click', function () {
+
+  score = 20;
+  secret_number = Math.trunc(Math.random() * 20) + 1;
+
+  document.querySelector('.score').textContent = score;
+
+  const msg = document.querySelector('.message');
+  msg.textContent = 'Start guessing...';
+  msg.style.boxShadow = 'none';
+
+
+  const body = document.querySelector('body');
+  body.style.backgroundColor = '#f08df0';
+
+  const number = document.querySelector('.number');
+  number.textContent = '?';
+  number.style.width = '12rem';
+  number.style.backgroundColor = '#00ffff';
+  number.style.boxShadow = '0 0 20px #00ffff, inset 0 0 10px #ff00ff';
+
+  document.querySelector('.guess').value = '';
+});
