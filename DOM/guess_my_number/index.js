@@ -98,17 +98,21 @@ let score = 20; //initial score , also called as state variable.
 
 // highscore variable
 let high_score = 0;
+
+// adding below lines (upto check functionality ) to use DRY principle by defining only once outside.
+const msg = document.querySelector('.message'); //message is a pragraph
+const score_value = document.querySelector('.score');
+const body = document.querySelector('body');
+const number = document.querySelector('.number');
 // check button functionality
 
 document.querySelector('.check').addEventListener('click',
   function () {
     const guess = Number(document.querySelector('.guess').value);
+
     console.log(guess);
     console.log(typeof guess);
 
-    // adding below 2 lines (upto if block) to use DRY principle by defining only once outside.
-    const msg = document.querySelector('.message'); //message is a pragraph
-    const score_value = document.querySelector('.score');
 
     // case 1: There is no guess/input (to check if there is a value in input field,if not print to console a msg)
     if (!guess) {
@@ -131,13 +135,13 @@ document.querySelector('.check').addEventListener('click',
       msg.style.boxShadow = '15px 15px 100px #8cff00ff';
       // with correct guess we need to change the backgroudn color of entire page,
       // so will select the whole body element
-      document.querySelector('body').style.backgroundColor = '#60b347';
-      document.querySelector('.number').style.width = '20rem';
-      document.querySelector('.number').style.backgroundColor = '#84ff00ff';
-      document.querySelector('.number').style.boxShadow = '0 0 20px #62ff00ff, inset 0 0 10px #ddff00ff';
+      body.style.backgroundColor = '#60b347';
+      number.style.width = '20rem';
+      number.style.backgroundColor = '#84ff00ff';
+      number.style.boxShadow = '0 0 20px #62ff00ff, inset 0 0 10px #ddff00ff';
 
       // display secret number when guess is actually correct. 
-      document.querySelector('.number').textContent = secret_number;
+      number.textContent = secret_number;
 
       // highscore logic
       if (score > high_score) {
@@ -198,17 +202,14 @@ document.querySelector('.again').addEventListener('click', function () {
   score = 20;
   secret_number = Math.trunc(Math.random() * 20) + 1;
 
-  document.querySelector('.score').textContent = score;
+  score_value.textContent = score;
 
-  const msg = document.querySelector('.message');
   msg.textContent = 'Start guessing...';
   msg.style.boxShadow = 'none';
 
 
-  const body = document.querySelector('body');
   body.style.backgroundColor = '#f08df0';
 
-  const number = document.querySelector('.number');
   number.textContent = '?';
   number.style.width = '12rem';
   number.style.backgroundColor = '#00ffff';
