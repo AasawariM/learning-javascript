@@ -185,6 +185,10 @@ document.querySelector('.check').addEventListener('click',
         score--;
         score_value.textContent = score;
       }
+      else {
+        msg.textContent = '💥 You lost the Game!';
+        score_value.textContent = 0;
+      }
     }
   });
 
