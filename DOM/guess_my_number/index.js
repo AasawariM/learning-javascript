@@ -115,7 +115,7 @@ document.querySelector('.check').addEventListener('click',
 
 
     // case 1: There is no guess/input (to check if there is a value in input field,if not print to console a msg)
-    if (!guess) {
+    if (!guess || guess < 1 || guess > 20) {
       msg.textContent = "⛔ No Number!";
       msg.style.padding = '0 1rem';
       msg.style.boxShadow = '10px 10px 20px #ff00ff';
@@ -153,29 +153,37 @@ document.querySelector('.check').addEventListener('click',
 
     // case 3: when guess is too low or too high
     // 2nd else if condition for too high 
-    else if (guess > secret_number) {
-      if (score > 1) //while score is still above 1
-      {
-        msg.textContent = '📈Too High!';
+    // else if (guess > secret_number) {
+    //   if (score > 1) //while score is still above 1
+    //   {
+    //     msg.textContent = '📈Too High!';
+    //     score--;
+    //     score_value.textContent = score;
+    //   }
+    //   else {
+    //     msg.textContent = '💥 You lost the Game!';
+    //     score_value.textContent = 0;
+    //   }
+    // }
+    // // 3rd else if condition for too low
+    // else if (guess < secret_number) {
+    //   if (score > 1) //while score is still above 1
+    //   {
+    //     msg.textContent = '📉Too Low!';
+    //     score--;
+    //     score_value.textContent = score;
+    //   }
+    //   else {
+    //     msg.textContent = '💥 You lost the Game!';
+    //     score_value.textContent = 0;
+    //   }
+    // }
+    // combine case 3 together in single block
+    else if (guess !== secret_number) {
+      if (score > 1) {
+        msg.textContent = guess > secret_number ? '📈Too High!' : '📉Too Low!';
         score--;
         score_value.textContent = score;
-      }
-      else {
-        msg.textContent = '💥 You lost the Game!';
-        score_value.textContent = 0;
-      }
-    }
-    // 3rd else if condition for too low
-    else if (guess < secret_number) {
-      if (score > 1) //while score is still above 1
-      {
-        msg.textContent = '📉Too Low!';
-        score--;
-        score_value.textContent = score;
-      }
-      else {
-        msg.textContent = '💥 You lost the Game!';
-        score_value.textContent = 0;
       }
     }
   });
