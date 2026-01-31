@@ -11,9 +11,9 @@ const modalWindow = document.querySelector('.modal');
 const closeBtn = document.querySelector('.close-modal');
 const overlay = document.querySelector('.overlay');
 
-console.log(showBtn, modalWindow, closeBtn, overlay); //showBtn will log only first matched element.
+// console.log(showBtn, modalWindow, closeBtn, overlay); //showBtn will log only first matched element.
 // so to get all matched selections.
-console.log(document.querySelectorAll('.show-modal')); //logs a nodelist 
+// console.log(document.querySelectorAll('.show-modal')); //logs a nodelist 
 
 // reassigning showBtn to access all 3 buttons with querySelectorAll
 showBtn = document.querySelectorAll('.show-modal');
@@ -23,7 +23,7 @@ showBtn = document.querySelectorAll('.show-modal');
 // for loop is a way of selecting multiple elements with same class and with for loop 
 // we can do something for each of them.
 for (let i = 0; i < showBtn.length; i++) {
-  console.log(showBtn[i].textContent); //logging text content of each of the 3 buttons.
+  // console.log(showBtn[i].textContent); //logging text content of each of the 3 buttons.
 }
 
 //A NodeList does NOT have addEventListener() =  TypeError: showBtn.addEventListener is not a function
@@ -56,7 +56,7 @@ const closeModal = function () {
 
 // openModal function
 const openModal = function () {
-  console.log("Button Clicked");
+  // console.log("Button Clicked");
   modalWindow.classList.remove('hidden');
   overlay.classList.remove('hidden');
 }
@@ -89,23 +89,26 @@ for (let i = 0; i < showBtn.length; i++) {
     // instead we can aggregate all properties in one class defined in css and in js we simply add or remove these classes as we need.
     // }
   );
+} // this was mistake did , for loop from last commits was closing after below listeners which is wrong,
+// it should close here only as we needed for loop only for showBtn as it's a Nodelist.
 
-  // ability of hiding the modalWindow by clicking x button.
 
-  closeBtn.addEventListener("click", closeModal //not closeModal() we dont want to call it here , instead we want js to call it on btn or overlay click.
-    // function () {
-    //   // to remove the model window on button click we need to add hidden class back to the element.
-    //   modalWindow.classList.add('hidden');
-    //   // also for overlay
-    //   overlay.classList.add('hidden');
-    // }
-  );
+// ability of hiding the modalWindow by clicking x button.
 
-  // ability to close/hide the modalWindow when we click outside of a modal.
+closeBtn.addEventListener("click", closeModal //not closeModal() we dont want to call it here , instead we want js to call it on btn or overlay click.
+  // function () {
+  //   // to remove the model window on button click we need to add hidden class back to the element.
+  //   modalWindow.classList.add('hidden');
+  //   // also for overlay
+  //   overlay.classList.add('hidden');
+  // }
+);
 
-  // so we need overlay eventlistener to be executed when we click on the overlay(outside).
-  overlay.addEventListener("click", closeModal); //not closeModal() we dont want to call it here , instead we want js to call it on btn or overlay click.
-}
+// ability to close/hide the modalWindow when we click outside of a modal.
+
+// so we need overlay eventlistener to be executed when we click on the overlay(outside).
+overlay.addEventListener("click", closeModal); //not closeModal() we dont want to call it here , instead we want js to call it on btn or overlay click.
+
 
 // we dont want same code ( modalWindow.classList.add('hidden');
 // overlay.classList.add('hidden'); )
@@ -126,3 +129,54 @@ for (let i = 0; i < showBtn.length; i++) {
 // appearance of elements on our page bcz classes allow us to aggregate css properties in one container.
 // so each class functions like a container with lot of properties in it.
 // thus,here in js why adding and removing classess we basically can acitivate and deactivate certain styles all at the same time.
+
+
+// handling key press events.
+// closing the modalWindow by hitting the escape key on the keyboard.
+// in order to listen for keyboard events , we still need to use addEventListener,
+// bcz key press event is just another type of event.
+// keyboard events are also called so called global events,bcz they dont happen on one specific element.
+// so for such events we listen on whole document.
+
+// remember we use same document , as its a big object which contains a bunch of methods like
+// querySelector , addEventListener etc. 
+
+// there are 3 types of events on keyboard, out of which we will use keydown.
+// keydown will happen as soon as we hit any key on the keyboard.
+document.addEventListener("keydown", function (e) {
+  // this code will be executed on any key press of keyboard.
+  // console.log("A key is pressed.");
+  // but we want to close the popup/modalWindow only on Esc key press.
+  // how to know which key was actually pressed if event here happens for all the keys?
+  // the information about which key was pressed will be stored in the event that is going to occur as soon as any key is pressed.
+
+  // so when we hit any key ,a keydown event is generated and our listener/handler function is waiting for that event to happen
+  // anytime when an event like this occurs,js generate an object which contains all info about the event itself,
+  // and we can access that object in event listener function.
+  // what we need to do so, is a parameter to be given for the handler function.
+  // e stands for event , you can give any name to this parameter.
+  // so as soon as the event occurs the js will call the handler function with event(e) object as the argument.
+  console.log(e); // object generated by js
+  console.log(e.key); // returns the key that is pressed
+
+  // if (e.key === 'Escape') { // when Escape key is pressed
+  // here we only want to close the modal when the modal is actually visible.
+  //i.e when modal doesnt contain class hidden,
+  // that's the condition in which we want to close the modal.
+
+  //***** */ checking if an element has a certain class ******
+  // if (modalWindow.classList.contains('hidden')) { //if true , model is not visible/hidden,
+  // so we will invert the boolean value as we need condition to be false to execute below code 
+
+
+  // if modal doesnt contain hidden class , close the modal.
+  // if (!modalWindow.classList.contains('hiddent')) {
+  //   closeModal(); // need to use it to execute code inside that function here ,
+  //   //  i.e why we will call it here.
+  // }
+
+  // writing 2 conditions in one 
+  if (e.key === 'Escape' && !modalWindow.classList.contains('hidden')) {
+    closeModal();
+  }
+});
