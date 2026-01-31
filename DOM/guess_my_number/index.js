@@ -56,7 +56,7 @@ console.log(document.querySelector('.guess').value = 20); //prints 20
 // function will get executed whenever the click event happens on check button.
 // this function is going to be called the event handler.
 // so 2nd arugement will be event handler function value(its a function expression)
-
+// this function is anyonomous i.e without any name
 
 // for real game , when we click on the check button,the number inside the input field will have to get retrieved
 // and we need to store it in a variable 
