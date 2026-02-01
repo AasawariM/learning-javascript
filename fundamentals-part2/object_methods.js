@@ -1,65 +1,55 @@
-// just like arrays objects can hold other other arrays and even objects inside objects.
-// we know that functions are another type of value and if function is just a value,
-// then that means we can create key value pairs in which value is a  function.
-// that means we can add functions to the objects.
-
-
 // object with a function as a key-value pair
 const jonas = {
   firstName: 'jonas',
   lastName: 'harington',
-  age: 2003,
+  birthYear: 2003,
   job: 'teacher',
   friends: ["peter", "steve", "michael"],
   hasDriverLicense: true,
 
-  // we used to do a function like this 
-  // const calcAge = function (birthYear) {
-  //   return 2026 - birthYear;
+
+  // calcAge: function () {
+  // return 2026 - this.birthYear;
   // }
 
-
-  // instead we did below 
-  // now , here calcAge is not a variable that stores a function but a property of jonas object
-  // calcAge: function (birthYear) {
-  //   return 2026 - birthYear;
-  // }
-
-  // here above this part is function expression 
-  // function (birthYear) {
-  //   return 2026 - birthYear;
-  // }
-
-  // bcz here we need function expression to create this method.(we cannot use function declrations)
-  // any function that is attached to an object is called a method.
-
-  // if we see carefully , we already have birthyear value - 2003 information in jonas object.
-  // and writing it twice is not ideal(not DRY) and we might make mistake passing wrong year.
-  // if we know birthyear is 2003 we should only write it once,
-  //  only on one place bcz when we have to change we should be changing in one place only.
-
-  // we could acutually access birth year property in our calcAge function (age: 2003)
-  // directly from jonas obect.
-  // this is done bcz in every method by a javascript we have access to
-  //  a special variable called "this".
-  // with this keyword we can read the birth year directly from object itself without
-  // having to pass it in function as an parameter.
   // new version
-
   calcAge: function () {
-    console.log(this); //this is the whole jonas object.
-    return 2026 - this.age;
-    // we could have done it as jonas.age but instead of 
-    // hardcoding the object name we will pass the object reference.
+    // we calculated the age and created new property on the current object.
+    // this.age notation is used here to create new property age on jonas object.
+    this.age = 2026 - this.birthYear;
+    return this.age;
+  },
+  getSummary: function () {
+    return `${this.firstName} is a ${this.calcAge()} years old ${this.job},and he has ${this.hasDriverLicense ? "a" : "no"} driver's license.`;
   }
-  // the this variable is equal to the object on which the method is called.
-  // it is equal to the object calling the method.
-  // here object calling the method is jonas
-  // bcz outside the object we are accessing as jonas.calcAge();
-  // that means inside this method the this variable or keyword will point to jonas.
+  // in a template string we can do a function call like :
+  // this.calcAge()
 };
-
-
 // accessing calcAge property/method
 console.log(jonas.calcAge());
-console.log(jonas['calcAge']());
+
+// lets say we need to access the age multiple times throughtout our program
+// we could do this 
+console.log(jonas.calcAge());
+console.log(jonas.calcAge());
+console.log(jonas.calcAge());
+// its a bad practice to do this  multiple times as function will run 3 times
+// to do the same calculation of 2026 - this.age;
+// instead what we can do is
+// calculate the age once and store it in object, and when needed later,
+// we can just retrive the age as a property from the object.
+// i.e we can use the this keyword also to store a new property.
+// check above calcAge function's new version.
+// and we can replace the function call above with simply request for the age property.
+console.log("Jonas's age is ", jonas.age);
+
+// small challenge : write a method called getSummary and this method should return a string,
+// which should summerize the data about jonas here.
+// getSummary method should be in object not like what i did below
+
+// function getSummary() {
+//   return `${jonas.firstName} is a ${jonas.age} old ${jonas.job} and he has ${jonas.hasDriverLicense ? "a" : "no"} driving license`;
+// }
+
+
+console.log(jonas.getSummary());
