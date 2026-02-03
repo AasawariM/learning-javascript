@@ -17,6 +17,8 @@ const btnhold = document.querySelector('.btn--hold');
 const current0El = document.getElementById('current--0');
 const current1El = document.getElementById('current--1');
 
+const Player0El = document.querySelector('.player--0');
+const Player1El = document.querySelector('.player--1');
 //initial values of scores
 // .textContent value type is always a string.
 score0El.textContent = 0; // passing 0 as a number but while displaying it is converted to number automatically.
@@ -31,6 +33,14 @@ diceEl.classList.add('hidden');
 
 // to persist current_score value
 let current_score = 0;
+// active player
+// setting it to 0 since we have started with first player.
+let activePlayer = 0;
+// why we have player 0 and 1 and not 1 and 2 is bcz we will store the scores of both players in an array.
+const scores = [0, 0]; //start with 0 points for both sides
+// these scores are actually final scores(which are bigger in size).
+// score of first player is at position 0 and of 2nd player is at position 1.
+
 // selecting the button
 // will need btnroll one.
 
@@ -55,8 +65,32 @@ btnroll.addEventListener('click', function () {
   if (randomNum !== 1) {
     // add dice number to the current score
     current_score += randomNum;
-    current0El.textContent = current_score; //need to change later as per current player
+    document.getElementById(`current--${activePlayer}`).textContent =
+      current_score;
   } else {
+    // when player rolls 1
+    // lose all current score
     // switch to the next player
+    // to switch we need to know which one is active player
+    // will create a variable to keep track of current playing player and will get that based on button click
+    // created activePlayer variable above
+    // it will hold 0 if current player is Player0 and it will hold 1 if current player is Player1
+
+    // before switching the player we need to change the current_score of current active player back to 0
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    // resetting current score as we switch the player.
+    current_score = 0;
+    // if active player is 0, make new active player to the player 1 else it should be 0.
+    activePlayer = activePlayer === 0 ? 1 : 0;
+
+    //visual change on switching players
+    // Player0El.classList.remove('player--active');
+    // Player1El.classList.add('player--active');
+    // instead of add and remove we can use toggle method
+    // toggle method
+    // adds a class it its not there and removes the class if its there.
+    // we could also do this with contains method by first checking if its there and if yes then remove but we have simplified method i.e toggle method.
+    Player0El.classList.toggle('player--active');
+    Player1El.classList.toggle('player--active');
   }
 });
