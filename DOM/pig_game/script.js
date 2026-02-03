@@ -166,3 +166,29 @@ btnhold.addEventListener('click', function () {
   // so will create a generic function to be used in both event handlers.
   // switchPlayer();
 });
+
+// resetting the game
+btnnew.addEventListener('click', function () {
+  // visual part
+
+  // 1.reset all scores
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  // 2. remove the winner class
+  // as we dont know who won the game so we will do it on both players
+  Player0El.classList.remove('player--winner');
+  Player1El.classList.remove('player--winner');
+
+  //remove active classes from 2nd player if he has been active.
+  Player1El.classList.remove('player--active'); //even if already not there then wont give error
+
+  // set first player the active player for beginnning.
+  Player0El.classList.add('player--active'); //even if already class there it wont add it again.
+
+  // setting internal state variables back to initial state
+  // will create init function which will have all the initial states of the game.
+  // in this commit dont run the code its not correctly working as i just wanted this function logic to be build here first then go for DRY.
+});
