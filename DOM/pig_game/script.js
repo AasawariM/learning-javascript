@@ -75,14 +75,12 @@ btnroll.addEventListener('click', function () {
     // will create a variable to keep track of current playing player and will get that based on button click
     // created activePlayer variable above
     // it will hold 0 if current player is Player0 and it will hold 1 if current player is Player1
-
     // before switching the player we need to change the current_score of current active player back to 0
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    // document.getElementById(`current--${activePlayer}`).textContent = 0;
     // resetting current score as we switch the player.
-    current_score = 0;
+    // current_score = 0;
     // if active player is 0, make new active player to the player 1 else it should be 0.
-    activePlayer = activePlayer === 0 ? 1 : 0;
-
+    // activePlayer = activePlayer === 0 ? 1 : 0;
     //visual change on switching players
     // Player0El.classList.remove('player--active');
     // Player1El.classList.add('player--active');
@@ -90,7 +88,58 @@ btnroll.addEventListener('click', function () {
     // toggle method
     // adds a class it its not there and removes the class if its there.
     // we could also do this with contains method by first checking if its there and if yes then remove but we have simplified method i.e toggle method.
-    Player0El.classList.toggle('player--active');
-    Player1El.classList.toggle('player--active');
+    // Player0El.classList.toggle('player--active');
+    // Player1El.classList.toggle('player--active');
+    switchPlayer();
   }
+});
+
+// generic function for switching to next player
+const switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  current_score = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  Player0El.classList.toggle('player--active');
+  Player1El.classList.toggle('player--active');
+};
+
+// when user clicks on button btnhold
+// we want to add current score to the total/global score.
+// we need to keep these total/global score persistant similar to the current score.
+
+// switching of current player only happens when the score is below 100,
+// bcz when the score is atleast 100, current player wins.
+btnhold.addEventListener('click', function () {
+  //1. add current score to active player's total score
+  //to store the scores we are using scores array variable which at the same time holds the
+  // score of both players [at positions 0 and 1 resp.]
+  //so we can use activePlayer variable to get the correct score of the current player.
+  scores[activePlayer] += current_score;
+  console.log(scores[activePlayer]);
+
+  // i.e if activePlayer is 2nd player i.e player1 then => scores[1] = scores[1]+current_score;
+
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
+  // 2. check if player's score is >=100
+  // finish the game
+  if (scores[activePlayer] >= 100) {
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    // we also need to remove the active style applied to active player class when previous player wins,
+    // bcz otherwise will have active player class at the same time as player winner class.
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
+  } else {
+    // when the game finishes,we dont want to switch the player,but if it doesn't only then do switch the player.
+    switchPlayer();
+  }
+  // if not
+  // 3.switch to the next player
+  // we need to switch to next player after adding current score to final score of current player.
+  // we need same functionality as previous
+  // so will create a generic function to be used in both event handlers.
+  // switchPlayer();
 });
