@@ -41,56 +41,61 @@ const scores = [0, 0]; //start with 0 points for both sides
 // these scores are actually final scores(which are bigger in size).
 // score of first player is at position 0 and of 2nd player is at position 1.
 
+// for playing or not(after winning we need to check for this)
+let playing = true; //boolean value(we are playing in the start)
+
 // selecting the button
 // will need btnroll one.
-
 btnroll.addEventListener('click', function () {
-  // 1. generate a random number for dice roll
-  // 2.display dice
-  // 3.check if rolled 1:true , move to next player.
+  if (playing) {
+    //code for roll is only executed if this condition is true. so nothing will happen if condition is false thus no need of else block.
+    // 1. generate a random number for dice roll
+    // 2.display dice
+    // 3.check if rolled 1:true , move to next player.
 
-  const randomNum = Math.trunc(Math.random() * 6) + 1;
-  console.log(randomNum);
+    const randomNum = Math.trunc(Math.random() * 6) + 1;
+    console.log(randomNum);
 
-  diceEl.classList.remove('hidden'); // show dice
-  diceEl.src = `assets/${randomNum}.png`;
+    diceEl.classList.remove('hidden'); // show dice
+    diceEl.src = `assets/${randomNum}.png`;
 
-  // add the dice roll number to the current element and also to the persistant variable
+    // add the dice roll number to the current element and also to the persistant variable
 
-  // we not just want to display the current score to the UI instead we also want a variable in our code,
-  // which always holds the current score of this current round.
-  // we cant define that variable here in handler function bcz everytime (we roll a dice)button is clicked,
-  // current_score we get reset.
-  // if roll number is not 1
-  if (randomNum !== 1) {
-    // add dice number to the current score
-    current_score += randomNum;
-    document.getElementById(`current--${activePlayer}`).textContent =
-      current_score;
-  } else {
-    // when player rolls 1
-    // lose all current score
-    // switch to the next player
-    // to switch we need to know which one is active player
-    // will create a variable to keep track of current playing player and will get that based on button click
-    // created activePlayer variable above
-    // it will hold 0 if current player is Player0 and it will hold 1 if current player is Player1
-    // before switching the player we need to change the current_score of current active player back to 0
-    // document.getElementById(`current--${activePlayer}`).textContent = 0;
-    // resetting current score as we switch the player.
-    // current_score = 0;
-    // if active player is 0, make new active player to the player 1 else it should be 0.
-    // activePlayer = activePlayer === 0 ? 1 : 0;
-    //visual change on switching players
-    // Player0El.classList.remove('player--active');
-    // Player1El.classList.add('player--active');
-    // instead of add and remove we can use toggle method
-    // toggle method
-    // adds a class it its not there and removes the class if its there.
-    // we could also do this with contains method by first checking if its there and if yes then remove but we have simplified method i.e toggle method.
-    // Player0El.classList.toggle('player--active');
-    // Player1El.classList.toggle('player--active');
-    switchPlayer();
+    // we not just want to display the current score to the UI instead we also want a variable in our code,
+    // which always holds the current score of this current round.
+    // we cant define that variable here in handler function bcz everytime (we roll a dice)button is clicked,
+    // current_score we get reset.
+    // if roll number is not 1
+    if (randomNum !== 1) {
+      // add dice number to the current score
+      current_score += randomNum;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        current_score;
+    } else {
+      // when player rolls 1
+      // lose all current score
+      // switch to the next player
+      // to switch we need to know which one is active player
+      // will create a variable to keep track of current playing player and will get that based on button click
+      // created activePlayer variable above
+      // it will hold 0 if current player is Player0 and it will hold 1 if current player is Player1
+      // before switching the player we need to change the current_score of current active player back to 0
+      // document.getElementById(`current--${activePlayer}`).textContent = 0;
+      // resetting current score as we switch the player.
+      // current_score = 0;
+      // if active player is 0, make new active player to the player 1 else it should be 0.
+      // activePlayer = activePlayer === 0 ? 1 : 0;
+      //visual change on switching players
+      // Player0El.classList.remove('player--active');
+      // Player1El.classList.add('player--active');
+      // instead of add and remove we can use toggle method
+      // toggle method
+      // adds a class it its not there and removes the class if its there.
+      // we could also do this with contains method by first checking if its there and if yes then remove but we have simplified method i.e toggle method.
+      // Player0El.classList.toggle('player--active');
+      // Player1El.classList.toggle('player--active');
+      switchPlayer();
+    }
   }
 });
 
@@ -110,31 +115,49 @@ const switchPlayer = function () {
 // switching of current player only happens when the score is below 100,
 // bcz when the score is atleast 100, current player wins.
 btnhold.addEventListener('click', function () {
-  //1. add current score to active player's total score
-  //to store the scores we are using scores array variable which at the same time holds the
-  // score of both players [at positions 0 and 1 resp.]
-  //so we can use activePlayer variable to get the correct score of the current player.
-  scores[activePlayer] += current_score;
-  console.log(scores[activePlayer]);
+  if (playing) {
+    //1. add current score to active player's total score
 
-  // i.e if activePlayer is 2nd player i.e player1 then => scores[1] = scores[1]+current_score;
+    //to store the scores we are using scores array variable which at the same time holds the
+    // score of both players [at positions 0 and 1 resp.]
+    //so we can use activePlayer variable to get the correct score of the current player.
+    scores[activePlayer] += current_score;
+    console.log(scores[activePlayer]);
 
-  document.getElementById(`score--${activePlayer}`).textContent =
-    scores[activePlayer];
-  // 2. check if player's score is >=100
-  // finish the game
-  if (scores[activePlayer] >= 100) {
-    document
-      .querySelector(`.player--${activePlayer}`)
-      .classList.add('player--winner');
-    // we also need to remove the active style applied to active player class when previous player wins,
-    // bcz otherwise will have active player class at the same time as player winner class.
-    document
-      .querySelector(`.player--${activePlayer}`)
-      .classList.remove('player--active');
-  } else {
-    // when the game finishes,we dont want to switch the player,but if it doesn't only then do switch the player.
-    switchPlayer();
+    // i.e if activePlayer is 2nd player i.e player1 then => scores[1] = scores[1]+current_score;
+
+    document.getElementById(`score--${activePlayer}`).textContent =
+      scores[activePlayer];
+
+    // 2. check if player's score is >=100
+    // finish the game
+    if (scores[activePlayer] >= 20) {
+      // as soon as we get the winner
+      playing = false;
+      // hide the dice
+      diceEl.classList.add('hidden');
+      // so we have to wrap the logic inside both hold and roll functions around the logic that
+      // the code inside them will only be executed if playing is true.
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+      // we also need to remove the active style applied to active player class when previous player wins,
+      // bcz otherwise will have active player class at the same time as player winner class.
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--active');
+
+      //what we want is if player wins hide the dice and also make the roll and hold buttons unclickable.
+      // solution is create a variable to hold the state of the game.
+      // so if we are still playing or not
+      // this will be a state variable,which tells us the condition of a system.
+      // condition will be is the game playing or not.
+      // if game is playing then everything will be normal and if as soon as game is finished we will say
+      // game is no longer playing(unable to click on buttons).
+    } else {
+      // when the game finishes,we dont want to switch the player,but if it doesn't only then do switch the player.
+      switchPlayer();
+    }
   }
   // if not
   // 3.switch to the next player
