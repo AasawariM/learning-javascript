@@ -1,0 +1,56 @@
+@media (max-width: 768px) {
+
+  main {
+    width: 95vw;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .player {
+    padding: 3rem 2rem;
+  }
+
+  .name {
+    font-size: 2.4rem;
+  }
+
+  .score {
+    font-size: 5rem;
+  }
+
+  .current {
+    width: 80%;
+    padding: 1.5rem;
+  }
+
+  .current-score {
+    font-size: 2.5rem;
+  }
+
+  .dice {
+    position: static;
+    transform: none;
+    margin: 1.5rem auto;
+    height: 7rem;
+  }
+
+
+  .btn {
+    position: static;
+    transform: none;
+    margin: 1rem auto;
+    display: block;
+    width: 70%;
+  }
+
+  .btn:active {
+    transform: none;
+  }
+
+  .winning-score {
+    transform: none;
+    margin: 1rem auto;
+    width: 60%;
+  }
+
+}
