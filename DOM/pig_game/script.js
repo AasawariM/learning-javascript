@@ -19,6 +19,8 @@ const current1El = document.getElementById('current--1');
 
 const Player0El = document.querySelector('.player--0');
 const Player1El = document.querySelector('.player--1');
+
+const winning_score = document.querySelector('.winning-score');
 //initial values of scores
 // .textContent value type is always a string.
 // score0El.textContent = 0; // passing 0 as a number but while displaying it is converted to number automatically.
@@ -34,6 +36,7 @@ const init = function () {
   current1El.textContent = 0;
 
   diceEl.classList.add('hidden');
+  winning_score.classList.remove('hidden');
   Player0El.classList.remove('player--winner');
   Player1El.classList.remove('player--winner');
   Player0El.classList.add('player--active'); //even if already class there it wont add it again.
@@ -74,6 +77,7 @@ init();
 // will need btnroll one.
 btnroll.addEventListener('click', function () {
   if (playing) {
+    winning_score.classList.add('hidden');
     //code for roll is only executed if this condition is true. so nothing will happen if condition is false thus no need of else block.
     // 1. generate a random number for dice roll
     // 2.display dice
@@ -157,7 +161,10 @@ btnhold.addEventListener('click', function () {
 
     // 2. check if player's score is >=100
     // finish the game
-    if (scores[activePlayer] >= 20) {
+    let input = Number(winning_score.value);
+    // if user enters anything let it be the finalScore and if not then final score will be 20.
+    const finalScore = input > 0 ? input : 20;
+    if (scores[activePlayer] >= finalScore) {
       // as soon as we get the winner
       playing = false;
       // hide the dice
@@ -196,4 +203,8 @@ btnhold.addEventListener('click', function () {
 // resetting the game
 // for case 2) of init()
 //removing anonymous fucntion and instead used init function here which is again just a  value
-btnnew.addEventListener('click', init);
+// btnnew.addEventListener('click', init);
+btnnew.addEventListener('click', function () {
+  init();
+  winning_score.value = '';
+});
