@@ -21,28 +21,54 @@ const Player0El = document.querySelector('.player--0');
 const Player1El = document.querySelector('.player--1');
 //initial values of scores
 // .textContent value type is always a string.
-score0El.textContent = 0; // passing 0 as a number but while displaying it is converted to number automatically.
+// score0El.textContent = 0; // passing 0 as a number but while displaying it is converted to number automatically.
 // console.log(typeof score0El.textContent);
-score1El.textContent = 0;
+// score1El.textContent = 0;
 
-//initial dice image is hidden
-diceEl.classList.add('hidden');
+let scores, current_score, activePlayer, playing;
 
+const init = function () {
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  diceEl.classList.add('hidden');
+  Player0El.classList.remove('player--winner');
+  Player1El.classList.remove('player--winner');
+  Player0El.classList.add('player--active'); //even if already class there it wont add it again.
+  Player1El.classList.remove('player--active'); //even if already not there then wont give error
+  // state variables.
+  // all have local scope as inside function only
+  // i.e why they're not accessible outside the function
+  // so i.e why declaring them outside of any function without any value.
+  // so we declare them outside but assign here.
+  scores = [0, 0];
+  current_score = 0;
+  activePlayer = 0;
+  playing = true;
+};
+
+// in 2 cases we want this function to run
+// 1) when we load the page for very first time.
+// 2) when reset button is clicked.
+// for case 1) of init()
+init();
 //****************************** starting with the  functionality ******************************
 // Rolling the Dice
 
 // to persist current_score value
-let current_score = 0;
+// let current_score = 0;
 // active player
 // setting it to 0 since we have started with first player.
-let activePlayer = 0;
+// let activePlayer = 0;
 // why we have player 0 and 1 and not 1 and 2 is bcz we will store the scores of both players in an array.
-const scores = [0, 0]; //start with 0 points for both sides
+// const scores = [0, 0]; //start with 0 points for both sides
 // these scores are actually final scores(which are bigger in size).
 // score of first player is at position 0 and of 2nd player is at position 1.
 
 // for playing or not(after winning we need to check for this)
-let playing = true; //boolean value(we are playing in the start)
+// let playing = true; //boolean value(we are playing in the start)
 
 // selecting the button
 // will need btnroll one.
@@ -168,27 +194,6 @@ btnhold.addEventListener('click', function () {
 });
 
 // resetting the game
-btnnew.addEventListener('click', function () {
-  // visual part
-
-  // 1.reset all scores
-  score0El.textContent = 0;
-  score1El.textContent = 0;
-  current0El.textContent = 0;
-  current1El.textContent = 0;
-
-  // 2. remove the winner class
-  // as we dont know who won the game so we will do it on both players
-  Player0El.classList.remove('player--winner');
-  Player1El.classList.remove('player--winner');
-
-  //remove active classes from 2nd player if he has been active.
-  Player1El.classList.remove('player--active'); //even if already not there then wont give error
-
-  // set first player the active player for beginnning.
-  Player0El.classList.add('player--active'); //even if already class there it wont add it again.
-
-  // setting internal state variables back to initial state
-  // will create init function which will have all the initial states of the game.
-  // in this commit dont run the code its not correctly working as i just wanted this function logic to be build here first then go for DRY.
-});
+// for case 2) of init()
+//removing anonymous fucntion and instead used init function here which is again just a  value
+btnnew.addEventListener('click', init);
