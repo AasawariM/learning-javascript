@@ -1,5 +1,8 @@
 'use strict';
 
+// added audio on dice roll.
+const diceSound = new Audio('assets/dice-roll.mp3');
+
 // selecting elements
 const score0El = document.querySelector('#score--0'); //writitng selector # with querySelector method.
 
@@ -88,7 +91,8 @@ btnroll.addEventListener('click', function () {
 
     diceEl.classList.remove('hidden'); // show dice
     diceEl.src = `assets/${randomNum}.png`;
-
+    //calling the audio object created.
+    diceSound.play();
     // add the dice roll number to the current element and also to the persistant variable
 
     // we not just want to display the current score to the UI instead we also want a variable in our code,
