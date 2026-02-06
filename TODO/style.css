@@ -17,7 +17,13 @@ body {
 header {
   margin: 50px;
   text-align: center;
+  display: flex;
+  gap: 10px;
   /* border: 2px solid black; */
+}
+
+h1 {
+  font-size: 3rem;
 }
 
 main {
@@ -25,6 +31,7 @@ main {
   padding: 2rem;
   /* for mobile responsive */
   width: min(50rem, 95vw);
+  margin: 2rem auto;
   background-color: white;
   border-radius: 16px;
 }
@@ -109,6 +116,10 @@ ul {
   width: 30px;
 }
 
+header img {
+  width: 50px;
+}
+
 .icons img:hover {
   box-shadow: 0 0 1rem #226c82;
 }
@@ -124,5 +135,13 @@ ul {
 @media (max-width: 600px) {
   main {
     padding: 1.2rem;
+  }
+
+  .item {
+    width: 100%;
+  }
+
+  header h1 {
+    font-size: 2rem;
   }
 }
