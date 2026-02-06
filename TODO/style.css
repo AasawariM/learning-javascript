@@ -24,7 +24,7 @@ main {
   border: 2px solid #badaf9;
   padding: 2rem;
   /* for mobile responsive */
-  width: min(40rem, 95vw);
+  width: min(50rem, 95vw);
   background-color: white;
   border-radius: 16px;
 }
@@ -74,25 +74,51 @@ main {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-ol {
+ul {
   margin-top: 20px;
   padding: 10px;
   list-style-type: none;
   /* border: 2px solid black; */
 }
 
-li {
+.item {
   border: 2px solid #badaf9;
   border-radius: 16px;
   padding: 15px;
   margin: 8px;
-  cursor: pointer;
   font-size: 20px;
   background-color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
 }
 
-li:hover {
+.task {
+  display: flex;
+}
+
+.task p {
+  margin-left: 10px;
+}
+
+.icons img {
+  margin: 0 10px;
+  cursor: pointer;
+  width: 30px;
+}
+
+.icons img:hover {
+  box-shadow: 0 0 1rem #226c82;
+}
+
+.item:hover {
   background-color: #badaf9;
+}
+
+.completed .list-item {
+  text-decoration: line-through;
 }
 
 @media (max-width: 600px) {
