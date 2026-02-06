@@ -85,8 +85,8 @@ function render() {
             <p class="list-item">${taskelement.text}</p>
           </div>
           <div class="icons">
-            <img src="/assets/edit.png" onClick="editTask(${index})"/>
-            <img src="/assets/delete.png" onClick="deleteTask(${index})"/>
+            <img src="assets/edit.png" onClick="editTask(${index})"/>
+            <img src="assets/delete.png" onClick="deleteTask(${index})"/>
           </div>
         </div>
     `;
