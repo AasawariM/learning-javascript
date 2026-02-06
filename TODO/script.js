@@ -2,8 +2,12 @@ let input = document.querySelector(".user-input");
 let addBtn = document.querySelector(".addBtn");
 let list = document.querySelector(".list-container");
 
-// empty array to store tasks
-const todoList = [];
+// check in local storage if any todos with key tasks are there if yes store in variable if not then assign empty array.
+const saved = localStorage.getItem("tasks");
+const todoList = saved ? JSON.parse(saved) : [];
+// You are loading from localStorage we need to call render() and if dont UI stays empty even though array has data.
+render();
+
 // adding task on pressing ENTER key
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") addBtn.click();
@@ -26,6 +30,7 @@ addBtn.addEventListener("click", function () {
   console.log(todoList);
 
   render();
+  saveTasks();
   // clear input
   input.value = "";
 });
@@ -35,6 +40,7 @@ function toggleTaskComplete(index) {
   todoList[index].completed = !todoList[index].completed;
   // here you are toggling but you need to update the UI also i.e why render call here
   render();
+  saveTasks();
   // console.log(todoList);
 }
 
@@ -42,6 +48,17 @@ function toggleTaskComplete(index) {
 const deleteTask = function (index) {
   todoList.splice(index, 1);
   render();
+  saveTasks();
+};
+
+// edit task
+const editTask = function (index) {
+  // task to edit should come on main input field and it should be gone
+  input.value = todoList[index].text;
+  input.focus();
+  todoList.splice(index, 1);
+  render();
+  saveTasks();
 };
 
 // render function = Take whatever is in my array → show it on the screen.
@@ -83,6 +100,14 @@ function render() {
     list.append(liEl);
   });
 }
+
+// localStorage
+const saveTasks = () => {
+  // JSON.stringify = used to convert JavaScript objects into a JSON string
+  // store with key tasks
+
+  localStorage.setItem("tasks", JSON.stringify(todoList));
+};
 
 // why not added li one by one and used array is bcz if need to do below things then array is a good approach as
 // we dont need to read everytime from dom and we can read from array and manipulate it easily
